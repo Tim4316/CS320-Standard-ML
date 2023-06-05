@@ -26,10 +26,39 @@ fun str2int_opt(cs: string): int option
 *)
 
 (* ****** ****** *)
-
 fun
 str2int_opt(cs: string): int option = raise NotImplemented320
-						
+
+fun isDigit(c: char): bool =
+  let
+    val zero = Char.ord(#"0")
+    val nine = Char.ord(#"9")
+    val charCode = Char.ord(c)
+  in
+    charCode >= zero andalso charCode <= nine
+  end
+
+fun str2int_opt(cs: string): int option =
+  let
+    fun helper(i: int, acc: int): int option =
+      if i >= String.size cs then
+        SOME acc
+      else if isDigit(String.sub(cs, i)) then
+        let
+          val digit = Char.ord(String.sub(cs, i)) - Char.ord(#"0")
+          val newAcc = acc * 10 + digit
+        in
+          helper(i + 1, newAcc)
+        end
+      else
+        NONE
+  in
+    if String.size cs = 0 then
+      NONE
+    else
+      helper(0, 0)
+  end
+
 (* ****** ****** *)
 
 (* end of [CS320-2023-Sum1-assign01-04.sml] *)
