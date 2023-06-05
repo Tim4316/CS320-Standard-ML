@@ -26,38 +26,48 @@ fun str2int_opt(cs: string): int option
 *)
 
 (* ****** ****** *)
+
 fun
 str2int_opt(cs: string): int option = raise NotImplemented320
 
-fun isDigit(c: char): bool =
-  let
-    val zero = Char.ord(#"0")
-    val nine = Char.ord(#"9")
-    val charCode = Char.ord(c)
-  in
-    charCode >= zero andalso charCode <= nine
-  end
-
 fun str2int_opt(cs: string): int option =
   let
-    fun helper(i: int, acc: int): int option =
-      if i >= String.size cs then
-        SOME acc
-      else if isDigit(String.sub(cs, i)) then
+    fun isDigit(c: char): bool =
+      Char.ord(c) >= Char.ord(#"0") andalso Char.ord(c) <= Char.ord(#"9")
+      
+    fun helper(i0: int): int option =
+      if i0 <= 0 then NONE
+      else if isDigit(String.sub(cs, i0-1)) then
         let
-          val digit = Char.ord(String.sub(cs, i)) - Char.ord(#"0")
-          val newAcc = acc * 10 + digit
+          val digit = Char.ord(String.sub(cs, i0-1)) - Char.ord(#"0")
+          val rest = helper(i0 - 1)
         in
-          helper(i + 1, newAcc)
+          case rest of
+            NONE => SOME digit
+          | SOME acc => SOME (10 * acc + digit)
         end
-      else
-        NONE
+      else NONE
   in
-    if String.size cs = 0 then
-      NONE
-    else
-      helper(0, 0)
+    if String.size cs > 0 then
+      let
+        val isValid = List.all isDigit (String.explode cs)
+      in
+        if isValid then helper (String.size cs)
+        else NONE
+      end
+    else NONE
   end
+
+
+
+
+
+
+val result = str2int_opt("01234")		
+val result1 = str2int_opt("1234")		
+val result2 = str2int_opt("01s234")	
+val result3 = str2int_opt("01=234")	
+val result4 = str2int_opt("01+234")	
 
 (* ****** ****** *)
 

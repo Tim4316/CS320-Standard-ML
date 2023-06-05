@@ -26,24 +26,41 @@ In particular, your implementation should guarantee:
 fun
 xlist_remove_reverse
 (xs: 'a xlist): 'a xlist = raise NotImplemented320
-
+					   
 fun xlist_remove_reverse(xs: 'a xlist): 'a xlist =
   let
-    fun removeReverseHelper(xs: 'a xlist, acc: 'a xlist): 'a xlist =
+    fun helper(xs: 'a xlist, reverse: bool): 'a xlist =
       case xs of
-        xlist_nil => acc
-      | xlist_cons(x, xs') => removeReverseHelper(xs', xlist_cons(x, acc))
-      | xlist_snoc(xs', x) => removeReverseHelper(xs', xlist_snoc(acc, x))
+        xlist_nil => xlist_nil
+      | xlist_cons(x, xs) =>
+        if reverse then
+          xlist_snoc(helper(xs, true), x)
+        else
+          xlist_cons(x, helper(xs, false))
+      | xlist_snoc(xs, x) =>
+        if reverse then
+          xlist_cons(x, helper(xs, true))
+        else
+          xlist_snoc(helper(xs, false), x)
       | xlist_append(xs1, xs2) =>
+        if reverse then
           let
-            val ys1 = removeReverseHelper(xs1, xlist_nil)
-            val ys2 = removeReverseHelper(xs2, xlist_nil)
+            val reversed_xs1 = helper(xs1, true)
+            val reversed_xs2 = helper(xs2, true)
           in
-            xlist_append(ys1, ys2)
+            xlist_append(reversed_xs1, reversed_xs2)
           end
-      | xlist_reverse(xs') => removeReverseHelper(xs', acc)
+        else
+          let
+            val xs1_helper = helper(xs1, false)
+            val xs2_helper = helper(xs2, false)
+          in
+            xlist_append(xs1_helper, xs2_helper)
+          end
+      | xlist_reverse(xs) =>
+        helper(xs, not reverse)
   in
-    removeReverseHelper(xs, xlist_nil)
+    helper(xs, false)
   end
 (* ****** ****** *)
 
