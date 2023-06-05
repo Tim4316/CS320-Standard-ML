@@ -22,25 +22,13 @@ def mylist_size(xs):
     return len(xs)
 
 def mylist_print(xs):
-    print("xs = ",end='')
+    print(xs)
 
 def mylist_append(xs, ys):
-    if xs == []:
-        return ys
-    else:
-        return [xs[0]] + mylist_append(xs[1:], ys)
+    return xs + ys
 
 def mylist_rappend(xs, ys):
-    if xs == []:
-        return ys
-    else:
-        return mylist_rappend(xs[1:], [xs[0]] + ys)
+    return ys + xs
 
 def mylist_reverse(xs):
-    def mylist_rappend(xs, ys):
-        if xs == []:
-            return ys
-        else:
-            return mylist_rappend(xs[1:], [xs[0]] + ys)
-
-    return mylist_rappend(xs, [])
+    return xs[::-1]
