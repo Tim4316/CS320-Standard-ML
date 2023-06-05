@@ -25,10 +25,16 @@ def mylist_print(xs):
     print(xs)
 
 def mylist_append(xs, ys):
-    return xs + ys
+    if not xs:
+        return ys
+    else:
+        return [xs[0]] + mylist_append(xs[1:], ys)
 
 def mylist_rappend(xs, ys):
-    return ys + xs
+    if not xs:
+        return ys
+    else:
+        return mylist_rappend(xs[1:], [xs[0]] + ys)
 
 def mylist_reverse(xs):
-    return xs[::-1]
+    return mylist_rappend(xs, [])
