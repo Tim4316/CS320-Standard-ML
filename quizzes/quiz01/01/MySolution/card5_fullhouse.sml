@@ -146,5 +146,16 @@ card5_fullhouse
 (cs: card list): bool = raise NotImplemented320
 
 (* ****** ****** *)
+fun card5_fullhouse(cs: card list): bool =
+  let
+    val [c1, c2, c3, c4, c5] = cs
+    val r1 = card_rank c1
+    val r2 = card_rank c2
+    val r3 = card_rank c3
+    val r4 = card_rank c4
+    val r5 = card_rank c5
+  in
+    (r1 = r2 andalso r2 = r3 andalso r4 = r5) orelse (r1 = r2 andalso r3 = r4 andalso r4 = r5)
+  end
 
 (* end of [CS320-2023-Sum1-quiz01-card5_fullhouse.sml] *)
