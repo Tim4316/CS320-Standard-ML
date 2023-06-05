@@ -55,12 +55,16 @@ int5_sort_nr(xs) for every 5-tuple xs of the type int5.
 
 val
 int2_sort_nr =
+fn(xs: int2): int2 => raise NotImplemented320
+
+val
+int2_sort_nr =
 fn(xs: int2): int2 =>
-   let
-       val (x1, x2) = xs
-   in
-       if x1 <= x2 then (x1, x2) else (x2, x1)
-   end
+let 
+  val (x1, x2) = xs
+in 
+  if x1 <= x2 then (x1, x2) else (x2, x1)
+end
 
 (* ****** ****** *)
 
@@ -68,11 +72,35 @@ val
 int3_sort_nr =
 fn(xs: int3): int3 => raise NotImplemented320
 
+val int3_sort_nr =
+fn(xs: int3): int3 =>
+let
+  val (x1, x2, x3) = xs
+  val (y1, y2) = int2_sort_nr(x1, x2)
+  val (z1, z2) = int2_sort_nr(y2, x3)
+  val (w1, w2) = int2_sort_nr(y1, z1)
+  val y3 = (w1, w2, z2)
+in
+  (y3)
+end
+
 (* ****** ****** *)
 
 val
 int4_sort_nr =
 fn(xs: int4): int4 => raise NotImplemented320
+
+val int4_sort_nr =
+fn(xs: int4): int4 =>
+let 
+  val (x1, x2, x3, x4) = xs
+  val (y1, y2, y3) = int3_sort_nr(x1, x2, x3)
+  val (z1, z2, z3) = int3_sort_nr(y2, y3, x4)
+  val (w1, w2, w3) = int3_sort_nr(y1, z1, z2)
+  val y4 = (w1, w2, w3, z3)
+in
+  (y4)
+end
 
 (* ****** ****** *)
 
@@ -80,6 +108,17 @@ val
 int5_sort_nr =
 fn(xs: int5): int5 => raise NotImplemented320
 
+val int5_sort_nr =
+fn(xs: int5): int5 =>
+let
+  val (x1, x2, x3, x4, x5) = xs
+  val (y1, y2, y3, y4) = int4_sort_nr(x1, x2, x3, x4)
+  val (z1, z2, z3, z4) = int4_sort_nr(y2, y3, y4, x5)
+  val (w1, w2, w3, w4) = int4_sort_nr(y1, z1, z2, z3)
+  val y5 = (w1, w2, w3, w4, z4)
+in
+  (y5)
+end
 (* ****** ****** *)
 
 (* end of [CS320-2023-Sum1-quiz01-int5_sort_nonrec.sml] *)
