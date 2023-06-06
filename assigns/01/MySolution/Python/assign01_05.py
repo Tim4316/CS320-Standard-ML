@@ -16,19 +16,20 @@ def mylist_append(xs, ys):
     if mylist_nilq(xs):
         return ys
     else:
-        return mylist_cons(xs.get_cons1(), mylist_append(xs.get_cons2(), ys))
+         return mylist_cons(xs.get_cons1(), mylist_append(xs.get_cons2(), ys))
 
 def mylist_rappend(xs, ys):
     if mylist_nilq(xs):
         return ys
     else:
         return mylist_rappend(xs.get_cons2(), mylist_cons(xs.get_cons1(), ys))
-
-def mylist_reverse(xs):
-    def aux_reverse(xs, acc):
-        if mylist_nilq(xs):
-            return acc
-        else:
-            return aux_reverse(xs.get_cons2(), mylist_cons(xs.get_cons1(), acc))
     
-    return aux_reverse(xs, mylist_nil())
+def mylist_reverse(xs):
+    def num_reverse(xs, xy):
+        if mylist_nilq(xs):
+            return xy
+        else:
+            return num_reverse(xs.get_cons2(), mylist_cons(xs.get_cons1(), xy))
+    
+    return num_reverse(xs, mylist_nil())
+
