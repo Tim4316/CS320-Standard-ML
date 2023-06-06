@@ -12,29 +12,23 @@ print("[import ./../assign01_lib.py] is done!")
 # mylist_reverse (see list_reverse in assign01-lib.sml)
 #
 ####################################################
-def mylist_nil():
-    return []
-
-def mylist_cons(x, xs):
-    return [x] + xs
-
-def mylist_size(xs):
-    return len(xs)
-
-def mylist_print(xs):
-    print(xs)
-
 def mylist_append(xs, ys):
-    if not xs:
+    if mylist_nilq(xs):
         return ys
     else:
-        return [xs[0]] + mylist_append(xs[1:], ys)
+        return mylist_cons(xs.get_cons1(), mylist_append(xs.get_cons2(), ys))
 
 def mylist_rappend(xs, ys):
-    if not xs:
+    if mylist_nilq(xs):
         return ys
     else:
-        return mylist_rappend(xs[1:], [xs[0]] + ys)
+        return mylist_rappend(xs.get_cons2(), mylist_cons(xs.get_cons1(), ys))
 
 def mylist_reverse(xs):
-    return mylist_rappend(xs, [])
+    def aux_reverse(xs, acc):
+        if mylist_nilq(xs):
+            return acc
+        else:
+            return aux_reverse(xs.get_cons2(), mylist_cons(xs.get_cons1(), acc))
+    
+    return aux_reverse(xs, mylist_nil())
