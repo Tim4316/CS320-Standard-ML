@@ -43,20 +43,10 @@ fun xlist_remove_reverse(xs: 'a xlist): 'a xlist =
         else
           xlist_snoc(helper(xs, false), x)
       | xlist_append(xs1, xs2) =>
-        if reverse then
-          let
-            val reversed_xs1 = helper(xs1, true)
-            val reversed_xs2 = helper(xs2, true)
-          in
-            xlist_append(reversed_xs1, reversed_xs2)
-          end
-        else
-          let
-            val xs1_helper = helper(xs1, false)
-            val xs2_helper = helper(xs2, false)
-          in
-            xlist_append(xs1_helper, xs2_helper)
-          end
+        if reverse then 
+          xlist_append (helper(xs2, true), helper (xs1, true))
+        else 
+          xlist_append (helper(xs1, false), helper(xs2, false))
       | xlist_reverse(xs) =>
         helper(xs, not reverse)
   in
