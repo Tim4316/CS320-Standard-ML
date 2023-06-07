@@ -29,22 +29,6 @@ implementation.
 *)
 (* ****** ****** *)
 
-(*fun list_pairing (xs: 'a list): ('a * 'a) list * 'a option =
-    let
-        fun helper [] acc = (acc, NONE)
-          | helper [x] acc = (acc, SOME x)
-          | helper (x::xs) acc =
-            let
-                val rev_xs = rev xs
-                val last = hd rev_xs
-                val rest = tl rev_xs
-                val pairs = (x, last)::acc
-            in
-                helper rest pairs
-            end
-    in
-        helper xs []
-    end*)
 fun list_nth(xs: 'a list, n: int): 'a =
 (
   case xs of
