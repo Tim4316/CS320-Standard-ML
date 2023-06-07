@@ -29,7 +29,7 @@ implementation.
 *)
 (* ****** ****** *)
 
-fun list_pairing (xs: 'a list): ('a * 'a) list * 'a option =
+(*fun list_pairing (xs: 'a list): ('a * 'a) list * 'a option =
     let
         fun helper [] acc = (acc, NONE)
           | helper [x] acc = (acc, SOME x)
@@ -44,14 +44,35 @@ fun list_pairing (xs: 'a list): ('a * 'a) list * 'a option =
             end
     in
         helper xs []
-    end
+    end*)
+fun list_nth(xs: 'a list, n: int): 'a =
+(
+  case xs of
+     nil => raise Subscript
+   | x1 :: xs => if n <= 0 then x1 else list_nth(xs, n-1)
+)
 
+fun list_pairing(xs: 'a list): ('a * 'a) list * 'a option =
+  let
+    fun pair(xs: 'a list): ('a * 'a) list =
+      case xs of
+        [] => []
+      | [x] => []
+      | x1 :: xn :: rest => (x1, xn) :: pair(rest)
 
-val result = list_pairing([])
-val result1 = list_pairing([1])
-val result2 = list_pairing([1,2])
-val result3 = list_pairing([1,2,3])
-val result4 = list_pairing([1,2,3,4])
+    fun mid(xs: 'a list): 'a option =
+      let
+        val len = length xs
+      in
+        if len mod 2 = 0 then NONE
+        else SOME (list_nth(xs, len div 2))
+      end
+
+    val p0 = pair xs
+    val opt = mid xs
+  in
+    (p0, opt)
+  end
 (* ****** ****** *)
 
 (* end of [CS320-2023-Sum1-midterm1-list_pairing.sml] *)

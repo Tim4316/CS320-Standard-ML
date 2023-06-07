@@ -18,22 +18,17 @@ your implementation is disqualified.
 
 fun fibonacci_nonrec(x: int): int =
   let
-    val fibSeq = ref [0, 1]  (* Stores Fibonacci sequence *)
+    val fib = ref [0, 1] 
   in
     int1_foldleft(x, 0, fn (prev, _) =>
       let
-        val next = hd (!fibSeq) + hd (tl (!fibSeq))
+        val next = hd (!fib) + hd (tl (!fib))
       in
-        fibSeq := next :: !fibSeq;
+        fib := next :: (!fib);
         next
       end
     )
   end
-
-
-
-
-
 (* ****** ****** *)
 
 (* end of [CS320-2023-Sum1-midterm1-fibonacci.sml] *)

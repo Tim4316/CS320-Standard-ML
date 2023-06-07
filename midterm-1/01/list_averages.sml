@@ -30,24 +30,21 @@ functions in your implementation of list_averages.
 //
 *)
 (* ****** ****** *)
-
 fun list_averages(xs: real list): real list =
-  let
-    fun loop([], _, ys) = ys
-      | loop(x::xs, sum, ys) =
-        let
-          val new_sum = sum + x
-          val new_average = new_sum / real(length ys + 1)
-        in
-          loop(xs, new_sum, ys @ [new_average])
-        end
-  in
-    loop(xs, 0.0, [])
-  end
+    let
+        fun loop([], _, _, ys) = rev ys
+          | loop(x::xs, sum, count, ys) =
+            let
+                val sum = sum + x
+                val count = count + 1
+                val avg = sum / real(count)
+            in
+                loop(xs, sum, count, avg::ys)
+            end
+    in
+        loop(xs, 0.0, 0, [])
+    end
 
-val result = list_averages([])
-val result1 = list_averages([1.0,2.0,3.0])
-val result2 = list_averages([1.0,2.0,3.0,4.0])
 
 
 (* ****** ****** *)
