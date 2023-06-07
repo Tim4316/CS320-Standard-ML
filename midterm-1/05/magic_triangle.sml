@@ -54,20 +54,32 @@ the previous.
 
 *)
 
-(*
-fun
-magic_triangle (n : int) : int list list = ...
-*)
+fun magic_triangle(n: int): int list list =
+    let
+        fun comp_row(prev_row: int list): int list =
+            case prev_row of
+                [] => [1]
+              | row =>
+                  let
+                      fun comp_row([], _) = []
+                        | comp_row(x::[], _) = [x]
+                        | comp_row(x::y::xs, prev) = (x + y) :: comp_row(y::xs, y)
+                  in
+                      1 :: comp_row(prev_row, 1)
+                  end
+    in
+        if n < 0 then []
+        else if n = 0 then [[1]]
+        else
+            let
+                val prev_tri = magic_triangle(n - 1)
+            in
+                prev_tri @ [comp_row(list_last(prev_tri))]
+            end
+    end
 
 (* ****** ****** *)
 
-(*
-val () =
-assert320
-(
-magic_triangle(5) =
-[[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1],[1,5,10,10,5,1]])
-*)
 
 (* ****** ****** *)
 

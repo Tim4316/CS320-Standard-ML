@@ -29,29 +29,29 @@ is not allowed to make use of library functions except
 those in the library for this class.
 *)
 (* ****** ****** *)
-(*
-fun
-list_grouping(xs: int list): (int * int) list = ...
-*)
+fun list_grouping(xs: int list): (int * int) list =
+    let
+        fun ys_insert(key: int, ys: (int * int) list): (int * int) list =
+            case ys of
+                [] => [(1, key)]
+              | (count, x)::rest =>
+                  if x = key then (count + 1, x)::rest
+                  else (1, key)::(count, x)::rest
+
+        fun merge([], ys) = ys
+          | merge(x::xs, ys) = merge(xs, ys_insert(x, ys))
+
+    in
+        merge(xs, [])
+    end;
+
+
+
+
 (* ****** ****** *)
-(*
-(*
-Some testing code:
-*)
-val N = 1000
-val nxs =
-list_grouping(list_map(list_fromto(0, N), fn i => N-i))
-*)
-(* ****** ****** *)
-(*
-(*
-Some testing code:
-*)
-Your implementation needs to be efficient to pass the
-following test:
-val N = 1000000
-val nxs = list_grouping(int1_map_list(N, fn i => N-i))
-*)
+
+
+
 (* ****** ****** *)
 
 (* end of [CS320-2023-Sum1-midterm1-list_grouping.sml] *)
