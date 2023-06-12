@@ -31,5 +31,12 @@ end
 *)
 
 (* ****** ****** *)
+fun isPrime(n0: int): bool =
+  let
+    val range = list_fromto(2, n0 - 1)
+    val factors = list_map(range, fn(x) => n0 mod x = 0)
+  in
+    not (list_exists(factors, fn(x) => x)) andalso n0 >= 2
+  end
 
 (* end of [CS320-2023-Sum1-assign02-05.sml] *)

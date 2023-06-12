@@ -1,8 +1,8 @@
 (* ****** ****** *)
-use
+(*use
 "./../../../mysmlib/mysmlib-cls.sml";
 (* ****** ****** *)
-(*
+
 HX-2023-06-05: 10 point
 The function [list_subsets]
 returns all the subsets of a given
@@ -35,6 +35,11 @@ val
 list_subsets =
 fn(xs: 'a list) => ...
 *)
+
+
+val list_subsets = fn(xs: 'a list) =>
+    list_foldr(xs, [[]], fn (x, i0) => 
+      i0 @ list_map(i0, fn subset => x :: subset))
 
 (* ****** ****** *)
 

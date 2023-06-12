@@ -16,8 +16,18 @@ list_range(0, 5) = [0,1,2,3,4]
 Please give a tail-recusive implementation of
 the list_range function
 //
-fun list_range(start: int, finish: int): int list
 *)
+
+fun list_range(start: int, finish: int): int list =
+  let
+    fun helper(cur: int, finish: int, i0: int list): int list =
+      if cur >= finish then
+        i0
+      else
+        helper(cur + 1, finish, i0 @ [cur])
+  in
+    helper(start, finish, [])
+  end
 
 (* ****** ****** *)
 
