@@ -1,7 +1,7 @@
 (* ****** ****** *)
 use "./../../../mysmlib/mysmlib-cls.sml";
 (* ****** ****** *)
-
+(*
 HX-2023-06-05: 10 point
 The function [list_subsets]
 returns all the subsets of a given
