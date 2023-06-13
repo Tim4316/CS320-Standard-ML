@@ -36,16 +36,19 @@ list_subsets =
 fn(xs: 'a list) => ...
 *)
 
-fun list_subsets (xs: 'a list): 'a list list =
-  case xs of
-    nil => [[]]
-  | x1 :: xs =>
-    let
-      val i0 = list_subsets(xs)
-    in
-      i0 @ list_map(i0, fn(xs) => x1 :: xs)
-    end
-
+fun
+list_subsets
+(xs: 'a list): 'a list list =
+(
+case xs of
+  nil => [[]]
+| x1 :: xs =>
+  let
+    val res = list_subsets(xs)
+  in
+    res @ list_map(res, fn(xs) => x1 :: xs)
+  end
+)
 
 
 (* ****** ****** *)
