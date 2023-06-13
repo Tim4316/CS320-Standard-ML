@@ -36,8 +36,16 @@ list_subsets =
 fn(xs: 'a list) => ...
 *)
 
-val list_subsets = fn(xs: 'a list) =>
-        list_foldr(xs, [[]], fn (x, acc) => acc @ list_map(acc, fn subset => x :: subset))
+fun list_subsets (xs: 'a list): 'a list list =
+  case xs of
+    nil => [[]]
+  | x1 :: xs =>
+    let
+      val i0 = list_subsets(xs)
+    in
+      i0 @ list_map(i0, fn(xs) => x1 :: xs)
+    end
+
 
 
 (* ****** ****** *)
