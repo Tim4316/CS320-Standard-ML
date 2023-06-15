@@ -32,5 +32,19 @@ fn(xs: int list) => ...
 
 (* ****** ****** *)
 
+val quiz02_03 = fn (xs: int list) =>
+  let
+    fun helper(x: int, ys: int list): bool =
+      list_forall (ys, fn (y: int) => x > y)
+    val rev = list_reverse xs
+    val (result, _) = list_foldl (rev, ([], []), fn ((ys, acc), x) =>
+        if helper(x, acc)
+        then (x::ys, x::acc)
+        else (ys, x::acc))
+  in
+    result
+  end
+
+    
 (* end of [CS320-2023-Sum1-quizzes-quiz02-03.sml] *)
 

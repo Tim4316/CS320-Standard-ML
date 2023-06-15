@@ -38,8 +38,7 @@ fn(xs: int list, ys: int list) => ...
 
 (* ****** ****** *)
 
-fun quiz02_02(xs: int list, ys: int list): bool =
+val quiz02_02 = fn(xs: int list, ys: int list) =>
   list_x2exists(xs, ys, fn(x, y) => abs(x - y) < 10)
 
 (* end of [CS320-2023-Sum1-quizzes-quiz02-02.sml] *)
-

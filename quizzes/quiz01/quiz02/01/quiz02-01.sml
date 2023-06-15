@@ -57,21 +57,13 @@ fn(word: string) => ...
 
 (* ****** ****** *)
 
-fun quiz02_01(word: string): char -> int =
-let
-  val len = strlen word
-  fun count(c: char): int =
+val quiz02_01 = fn (word: string) =>
     let
-      fun helper(x: int, i0: int): int =
-        if x = len then i0
-        else if strsub(word, x) = c then helper(x + 1, i0 + 1)
-        else helper(x + 1, i0)
+      val num = fn (c: char) =>
+        string_foldright(word, 0, fn (i0, x) => if x = c then i0 + 1 else i0)
     in
-      helper(0, 0)
+      num
     end
-in
-  count
-end;
 
 (* end of [CS320-2023-Sum1-quizzes-quiz02-01.sml] *)
 
