@@ -72,6 +72,22 @@ val
 word_neighbors = fn(word: string) => ...
 *)
 
+val word_neighbors = fn (word: string) =>
+  let
+    val len = string_length word
+    fun char_variant (i, ch) j = 
+      if ch = strsub(AB, j)
+      then NONE
+      else 
+        SOME (string_tabulate (len, fn k => 
+            if k = i 
+            then strsub(AB, j) 
+            else strsub(word, k)))
+    fun char_variants (i, ch) = 
+        list_map (list_filter (list_tabulate (26, char_variant (i, ch)), optn_is_some), optn_unsome)
+  in
+    list_concat (string_imap_list(word, char_variants))
+  end
 (* ****** ****** *)
 
 (* end of [CS320-2023-Sum1-assign03-02.sml] *)

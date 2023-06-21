@@ -19,5 +19,20 @@ matrix.
 *)
 
 (* ****** ****** *)
-
+fun stream_ziplst (fxs: 'a stream list) : 'a list stream = fn () =>
+    case fxs of
+      [] => strcon_nil
+      | _ => 
+      if list_exists (fxs, fn fxs2 => 
+          case fxs2() of
+            strcon_nil => true
+            | _ => false )  
+      then strcon_nil
+      else 
+          let 
+              val hds = list_map (fxs, stream_head)
+              val tls = list_map (fxs, stream_tail)
+          in 
+              strcon_cons (hds, stream_ziplst tls)
+          end
 (* end of [CS320-2023-Sum1-assign03-08.sml] *)

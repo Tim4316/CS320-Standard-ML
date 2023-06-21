@@ -19,4 +19,30 @@ val theNatPairs: (int*int) stream = fn () => ...
 
 (* ****** ****** *)
 
+val theNatPairs: (int*int) stream = 
+  let 
+    fun fxs n = fn () =>
+      let
+        fun fxs2 i =
+          if i > n then
+            strcon_nil
+          else
+            strcon_cons((i, n-i), fn () => fxs2 (i+1))
+      in
+        fxs2 0
+      end
+  in
+    stream_concat (stream_tabulate (~1, fxs))
+  end
+
+
+
+
+
+
+
+
 (* end of [CS320-2023-Sum1-assign03-05.sml] *)
+
+
+ 
